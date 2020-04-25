@@ -20,8 +20,6 @@ router.get('/',function(req,res){
     var errmsg=req.flash('error')
     if(errmsg)msg=errmsg;
     console.log('join 라우팅 성공!!')
-    console.log(req.flash('error'))
-    //msg="이것은 ajax 통신을 위해 없애보겠습니다!";
     res.render('join.ejs',{'message':msg})
 
 })
@@ -29,7 +27,7 @@ router.get('/',function(req,res){
 //passport.serialize
 passport.serializeUser(function(user, done) {
 	console.log('passport session save : ', user.id)
-  done(null, user.id)  //얘가 이제 deserialized에게 user.id를 youngji라는 객체로 전달해준다
+  done(null, user.id)  
 })
 
 passport.deserializeUser(function(userid, done) {
@@ -59,21 +57,9 @@ passport.use('local-join', new LocalStrategy({
 }
 ))
 
-router.post('/',
-	passport.authenticate('local-join', function(err, z, info) {
-		if(err) res.status(500).json(err);
-        if (!z) {
-            console.log(info.message)
-            console.log("실행되냐요?")
-            console.log(req.flash('error'))
-            return res.redirect('/join')
-        }
-        else{
-            console.log(z)
-            return res.status(200).json("success");
-        }
-	})
-)
-
+router.post('/',passport.authenticate('local-join',{
+    successRedirect: '/main',
+	failureRedirect: '/join',
+	failureFlash: true }))
 
 module.exports=router;
