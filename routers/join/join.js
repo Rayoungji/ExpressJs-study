@@ -19,7 +19,6 @@ router.get('/',function(req,res){
     var msg;
     var errmsg=req.flash('error')
     if(errmsg)msg=errmsg;
-    console.log('join 라우팅 성공!!')
     res.render('join.ejs',{'message':msg})
 
 })
