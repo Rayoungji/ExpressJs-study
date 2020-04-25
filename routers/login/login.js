@@ -15,10 +15,8 @@ var connection=mysql.createConnection({
 connection.connect();
 
 router.get('/', function(req,res) {
-	var msg;
-	var errMsg = req.flash('error')
-	if(errMsg) msg = errMsg;
-	res.render('login.ejs');
+
+	res.render('login.ejs',{'message':msg});
 })
 
 
