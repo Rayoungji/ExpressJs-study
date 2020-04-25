@@ -18,19 +18,20 @@ router.get('/', function(req,res) {
 	var msg;
 	var errMsg = req.flash('error')
 	if(errMsg) msg = errMsg;
-	res.render('login.ejs', {'message' : msg});
+	res.render('login.ejs');
 })
 
 
 passport.serializeUser(function(user, done) {
-	console.log('passport session save : ', user.id)
-  done(null, user.id)  
+    console.log('passport session save : ', user.id)
+    done(null, user.id); 
 })
 
-passport.deserializeUser(function(userid, done) {
-	console.log('passport session get id: ', userid)
-	done(null, userid);
+passport.deserializeUser(function(id, done){
+    console.log('passport session get id : ', id)
+    done(null, id);
 })
+
 
 passport.use('local-login', new LocalStrategy({
     usernameField: 'email',
@@ -40,7 +41,7 @@ passport.use('local-login', new LocalStrategy({
     var query = connection.query('select * from user where email=?', [email], function(err,rows) {
         if(err) return done(err);
         if(rows.length) { 
-            return done(null, {'email' : email, 'id' : rows[0].UID})
+            return done(null, {'email' : email, 'id' : rows[0].index})
         } else {
                 return done(null, false, {'message' : 'Incorrect email or password'})
         }
