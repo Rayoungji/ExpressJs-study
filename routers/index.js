@@ -5,10 +5,12 @@ var router=express.Router()
 var main=require('./main/main')
 var mail=require('./mail/mail')
 var join=require('./join/join')
+var login=require('./login/login')
 
 //라우터 레벨에 미들웨어 정의
 router.use('/main',main)
 router.use('/mail',mail)
 router.use('/join',join)
+router.use('/login',login)
 
 module.exports=router;
