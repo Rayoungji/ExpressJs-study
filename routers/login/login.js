@@ -15,7 +15,10 @@ var connection=mysql.createConnection({
 connection.connect();
 
 router.get('/', function(req,res) {
-
+    var msg;
+    var errMsg = req.flash('error')
+    console.log("login page req.user",req.user)
+	if(errMsg) msg = errMsg;
 	res.render('login.ejs',{'message':msg});
 })
 
@@ -61,3 +64,9 @@ router.post('/', function(req, res, next) {
 })
 
 module.exports=router;
+
+/*
+로그인인 경우 ajax통신으로 인해 json응답을 해주어야하므로 authenticate함수를 커스터마이징하였다
+커스터마이징한 경우 라우터에 콜백함수를 사용하므로써 req,res에 직접 접근할 수 있다 
+즉 여기에서 세션객체에 접근할 수 있다
+*/
