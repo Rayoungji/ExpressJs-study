@@ -8,7 +8,7 @@ router.get('/', function(req,res) {
 	console.log("main loaded")
 	console.log("회원가입 성공시 req.user가 있을까요?",req.user)
 	var id = req.user;
-	//if(!id) res.render('login.ejs');
+	if(!id) res.render('login.ejs');
 	res.render('main.ejs', {'id' : id});
 });
 
